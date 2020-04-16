@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object Client {
 
     val gson = GsonBuilder()
-        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+//        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
         .create()
 
     val retrofit = Retrofit.Builder()

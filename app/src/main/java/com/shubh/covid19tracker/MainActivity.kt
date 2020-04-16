@@ -42,11 +42,14 @@ class MainActivity : AppCompatActivity() {
 
         })
         searchView.setOnCloseListener {
-            list.clear()
-            list.addAll(originalList)
+            fetchData()
             return@setOnCloseListener true
         }
 
+        fetchData()
+    }
+
+    private fun fetchData() {
         GlobalScope.launch(Dispatchers.Main) {
             val response = withContext(Dispatchers.IO) { Client.api.getMyUser() }
             if (response.isSuccessful) {
@@ -60,15 +63,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun searchUsers(query: String) {
-        GlobalScope.launch(Dispatchers.Main) {
-            val response = withContext(Dispatchers.IO) { Client.api.getUser(query) }
-            if (response.isSuccessful) {
-                response.body()?.let {
-                    list.clear()
-                    list.addAll(it.items)
-                    adapter.notifyDataSetChanged()
+        if (query.length>=2) {
+            GlobalScope.launch(Dispatchers.Main) {
+                val response = withContext(Dispatchers.IO) { Client.api.getUser(query) }
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        list.clear()
+                        list.addAll(listOf(it))
+                        adapter.notifyDataSetChanged()
+                    }
                 }
             }
+        }
+        else{
+            list.clear()
+            fetchData()
         }
     }
 }

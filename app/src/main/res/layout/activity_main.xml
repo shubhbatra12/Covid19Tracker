@@ -6,15 +6,16 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-<!--    <SearchView-->
+    <SearchView
 
-<!--        android:id="@+id/searchView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"/>-->
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/countryRv"
         android:layout_width="match_parent"
+        android:layout_below="@+id/searchView"
         android:layout_height="wrap_content" />
 
 </RelativeLayout>

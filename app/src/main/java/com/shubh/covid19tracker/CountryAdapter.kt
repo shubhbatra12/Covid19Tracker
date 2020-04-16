@@ -19,13 +19,13 @@ class CountryAdapter(val data: List<Country>) : RecyclerView.Adapter<CountryAdap
 
     override fun getItemCount() = data.size
 
-    override fun onBindViewHolder(holder: CountryAdapter.UserViewHolder, position: Int) = holder.bind(data[position])
+    override fun onBindViewHolder(holder: UserViewHolder, position: Int) = holder.bind(data[position])
 
     class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(item: Country) = with(itemView) {
             nameView.text = item.country
             totalCases.text = item.cases.toString()
-            Picasso.get().load(item.countryInfo?.flag).into(imageView)
+//            Picasso.get().load(item.countryInfo!!.flag).into(imageView)
 
         }
     }

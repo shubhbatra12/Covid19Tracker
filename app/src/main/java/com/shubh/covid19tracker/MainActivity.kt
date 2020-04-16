@@ -28,25 +28,24 @@ class MainActivity : AppCompatActivity() {
             adapter = this@MainActivity.adapter
         }
 
-//        searchView.isSubmitButtonEnabled = true
-//        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-//            override fun onQueryTextSubmit(query: String?): Boolean {
-//                query?.let { searchUsers(it) }
-//                return true
-//            }
-//
-//            override fun onQueryTextChange(newText: String?): Boolean {
-//                newText?.let { searchUsers(it) }
-//
-//                return true
-//            }
-//
-//        })
-//        searchView.setOnCloseListener {
-//            list.clear()
-//            list.addAll(originalList)
-//            return@setOnCloseListener true
-//        }
+        searchView.isSubmitButtonEnabled = true
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let { searchUsers(it) }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let { searchUsers(it) }
+                return true
+            }
+
+        })
+        searchView.setOnCloseListener {
+            list.clear()
+            list.addAll(originalList)
+            return@setOnCloseListener true
+        }
 
         GlobalScope.launch(Dispatchers.Main) {
             val response = withContext(Dispatchers.IO) { Client.api.getMyUser() }
@@ -60,17 +59,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-//    private fun searchUsers(query: String) {
-//        GlobalScope.launch(Dispatchers.Main) {
-//            val response = withContext(Dispatchers.IO) { Client.api.searchUser(query) }
-//            if (response.isSuccessful) {
-//                response.body()?.let {
-//                    list.clear()
-//                    list.addAll(it.items)
-//                    adapter.notifyDataSetChanged()
-//                }
-//            }
-//        }
-//    }
+    private fun searchUsers(query: String) {
+        GlobalScope.launch(Dispatchers.Main) {
+            val response = withContext(Dispatchers.IO) { Client.api.getUser(query) }
+            if (response.isSuccessful) {
+                response.body()?.let {
+                    list.clear()
+                    list.addAll(it.items)
+                    adapter.notifyDataSetChanged()
+                }
+            }
+        }
+    }
 }
 

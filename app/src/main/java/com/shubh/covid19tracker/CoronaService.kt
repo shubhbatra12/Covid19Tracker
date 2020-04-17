@@ -11,9 +11,7 @@ interface CoronaService {
     suspend fun getMyUser(): Response<List<Country>>
 
     @GET("countries/{id}")
-    suspend fun getUser(@Path("id") id:String): Response<SearchResponse>
+    suspend fun getUser(@Path("id") id:String): Response<Country>
 
-    @GET("search/users")
-    suspend fun searchUser(@Query("q") name:String): Response<SearchResponse>
 
 }

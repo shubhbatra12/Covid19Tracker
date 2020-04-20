@@ -8,11 +8,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 object Client {
 
     val gson = GsonBuilder()
-//        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
         .create()
 
     val retrofit = Retrofit.Builder()
-        .baseUrl("https://corona.lmao.ninja/")
+        .baseUrl("https://corona.lmao.ninja/v2/")
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
 

@@ -24,7 +24,7 @@ class CountryAdapter(val data: List<Country>) : RecyclerView.Adapter<CountryAdap
     class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(item: Country) = with(itemView) {
             nameView.text = item.country
-            totalCases.text = item.cases.toString()
+            totalCases.text = "Total Cases : "+item.cases.toString()
             Picasso.get().load(item.countryInfo?.flag).into(imageView)
 
         }

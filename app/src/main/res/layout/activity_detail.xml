@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#555353"
     tools:context=".DetailActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -12,7 +13,7 @@
         android:layout_height="wrap_content"
         app:title="Covid19"
         app:titleTextColor="@android:color/white"
-        android:background="@color/colorPrimary"
+        android:background="#F44336"
         android:id="@+id/toolbarDet"/>
 
     <LinearLayout
@@ -30,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/white"
         android:text="Name"
         android:textSize="30sp"
         android:id="@+id/contName"/>
@@ -41,7 +42,7 @@
         android:layout_marginTop="10dp"
         android:textColor="@android:color/holo_blue_dark"
         android:text="Total Cases : "
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:id="@+id/totCases"/>
 
     <TextView
@@ -50,7 +51,7 @@
         android:layout_marginTop="10dp"
         android:textColor="@android:color/holo_orange_light"
         android:text="Active Cases : "
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:id="@+id/actCases"/>
 
     <TextView
@@ -59,7 +60,7 @@
         android:layout_marginTop="10dp"
         android:textColor="@android:color/holo_red_dark"
         android:text="Deceased : "
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:id="@+id/deadCases"/>
 
     <TextView
@@ -68,7 +69,7 @@
         android:layout_marginTop="10dp"
         android:textColor="@android:color/holo_green_light"
         android:text="Recovered Cases : "
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:id="@+id/recoveredCases"/>
 
     <TextView
@@ -77,34 +78,34 @@
         android:layout_marginTop="10dp"
         android:textColor="@android:color/holo_red_light"
         android:text="Critical Cases : "
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:id="@+id/criticalCases"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:textColor="@android:color/primary_text_light"
+        android:textColor="@android:color/secondary_text_dark_nodisable"
         android:text="Total Tests : "
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:id="@+id/Tests"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:textColor="@android:color/primary_text_light"
+        android:textColor="@android:color/secondary_text_light_nodisable"
         android:text="Tests Per Million : "
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:id="@+id/TestsPM"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:textColor="@android:color/primary_text_light"
+        android:textColor="@android:color/secondary_text_dark_nodisable"
         android:text="Last Updated : "
-        android:textSize="25sp"
+        android:textSize="15sp"
         android:id="@+id/lastUpdt"/>
 
 </LinearLayout>

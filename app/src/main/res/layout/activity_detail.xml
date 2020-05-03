@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#555353"
+    android:background="#323131"
     tools:context=".DetailActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -15,6 +15,11 @@
         app:titleTextColor="@android:color/white"
         android:background="#F44336"
         android:id="@+id/toolbarDet"/>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/detailActRefresh">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -108,6 +113,8 @@
         android:textSize="15sp"
         android:id="@+id/lastUpdt"/>
 
-</LinearLayout>
+        </LinearLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </LinearLayout>

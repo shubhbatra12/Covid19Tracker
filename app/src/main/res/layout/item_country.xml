@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
     android:onClick="openDetail"
-    android:background="#555353"
+    android:background="#323131"
     android:orientation="horizontal">
 
     <ImageView

@@ -44,7 +44,13 @@ class MainActivity : AppCompatActivity() {
         } else {
             openDialog()
         }
+
+        swipeToRefresh.setOnRefreshListener {
+            fetchData()
+            swipeToRefresh.isRefreshing = false
+        }
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
@@ -82,8 +88,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.refreshBtn -> {
-                fetchData()
+            R.id.settingsMain -> {
+                startActivity(Intent(this,SettingsActivity::class.java))
+                //Toast.makeText(this,"Working On It",Toast.LENGTH_LONG).show()
+
             }
 
         }
@@ -129,7 +137,6 @@ class MainActivity : AppCompatActivity() {
 
         val mBuilder = AlertDialog.Builder(this)
             .setView(mDialogView)
-            .setTitle("Turn On Internet")
             .setCancelable(true)
         val  mAlertDialog = mBuilder.show()
 

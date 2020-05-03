@@ -16,5 +16,10 @@
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="android.widget.SearchView" />
 
+    <item
+        android:id="@+id/settingsMain"
+        android:title="Settings"
+        app:showAsAction="collapseActionView"/>
+
 
 </menu>

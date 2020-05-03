@@ -5,21 +5,28 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="#555353"
+    android:background="#323131"
     tools:context=".MainActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="Covid19"
+        app:title="Covid-19 Tracker"
         app:titleTextColor="@android:color/white"
         android:background="#F44336"
         android:id="@+id/toolbar"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/countryRv"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeToRefresh"
         android:layout_width="match_parent"
-        android:layout_below="@+id/toolbar"
-        android:layout_height="wrap_content" />
-    
+        android:layout_height="wrap_content">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/countryRv"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/toolbar"
+            android:layout_height="wrap_content" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 </LinearLayout>

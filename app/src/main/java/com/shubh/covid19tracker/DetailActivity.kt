@@ -15,13 +15,24 @@ import java.text.SimpleDateFormat
 
 class DetailActivity : AppCompatActivity() {
 
-    @SuppressLint("SetTextI18n")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
-        val query = intent.getStringExtra("name")
+        detailActRefresh.setOnRefreshListener {
+            val Country = contName.text.toString()
+            setData(Country)
+            detailActRefresh.isRefreshing=false
+        }
 
+        val query = intent.getStringExtra("name")
+        setData(query)
+    }
+
+
+    @SuppressLint("SetTextI18n", "SimpleDateFormat")
+    private fun setData(query:String){
         GlobalScope.launch(Dispatchers.Main) {
             val thisCountry = withContext(Dispatchers.IO) { Client.api.getUserDet(query) }
             Picasso.get().load(thisCountry.countryInfo?.flag).into(imgFlag)
@@ -39,7 +50,7 @@ class DetailActivity : AppCompatActivity() {
             val sdf = SimpleDateFormat(myFormat)
             val dateEDT = sdf.format(thisCountry.updated)
 
-            lastUpdt.text = "Last Updated : " + dateEDT
+            lastUpdt.text = "Last Updated : $dateEDT"
         }
     }
 }

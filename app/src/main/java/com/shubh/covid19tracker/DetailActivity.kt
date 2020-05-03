@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.preference.PreferenceManager
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.item_country.view.*
@@ -15,9 +16,13 @@ import java.text.SimpleDateFormat
 
 class DetailActivity : AppCompatActivity() {
 
+    private val sharedPreferences by lazy {
+        PreferenceManager.getDefaultSharedPreferences(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        changeTheme(false)
         setContentView(R.layout.activity_detail)
 
         detailActRefresh.setOnRefreshListener {
@@ -28,6 +33,17 @@ class DetailActivity : AppCompatActivity() {
 
         val query = intent.getStringExtra("name")
         setData(query)
+    }
+
+    private fun changeTheme(reCreate: Boolean) {
+        if(sharedPreferences.getBoolean(DARK_THEME, true)){
+            setTheme(R.style.DarkTheme)
+        }else{
+            setTheme(R.style.LightTheme)
+        }
+        if(reCreate){
+            recreate()
+        }
     }
 
 

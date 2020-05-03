@@ -1,7 +1,6 @@
 package com.shubh.covid19tracker
 
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.net.wifi.WifiManager
@@ -25,7 +24,8 @@ import kotlinx.coroutines.withContext
 
 const val DARK_THEME = "DarkTheme"
 const val RC_SETTINGS = 111
-const val THEME_CHANGED = 100
+const val THEME_CHANGED = "ThemeChanged"
+
 class MainActivity : AppCompatActivity() {
 
     val list = arrayListOf<Country>()
@@ -193,7 +193,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == RC_SETTINGS){
-            if(resultCode == THEME_CHANGED){
+            if(sharedPreferences.getBoolean(THEME_CHANGED, false)){
                 changeTheme(true)
             }
         }

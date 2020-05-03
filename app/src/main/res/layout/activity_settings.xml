@@ -15,10 +15,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/themeBtn"
         android:background="?attr/background1">
 
         <TextView
+            android:id="@+id/themeBtn"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:text="Theme"

@@ -1,6 +1,5 @@
 package com.shubh.covid19tracker
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -36,12 +35,12 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun changeTheme(reCreate: Boolean) {
-        if(sharedPreferences.getBoolean(DARK_THEME, true)){
+        if (sharedPreferences.getBoolean(DARK_THEME, true)) {
             setTheme(R.style.DarkTheme)
-        }else{
+        } else {
             setTheme(R.style.LightTheme)
         }
-        if(reCreate){
+        if (reCreate) {
             recreate()
         }
     }
@@ -62,14 +61,14 @@ class SettingsActivity : AppCompatActivity() {
             mAlertDialog.dismiss()
 //            Toast.makeText(this,"Something",Toast.LENGTH_SHORT).show()
             sharedPreferencesEditor.putBoolean(DARK_THEME, true).commit()
-            setResult(THEME_CHANGED)
+            sharedPreferencesEditor.putBoolean(THEME_CHANGED, true).commit()
         }
 
         mDialogView.radioButtonLight.setOnClickListener {
             mAlertDialog.dismiss()
 //            Toast.makeText(this,"Other thing",Toast.LENGTH_SHORT).show()
             sharedPreferencesEditor.putBoolean(DARK_THEME, false).commit()
-            setResult(THEME_CHANGED)
+            sharedPreferencesEditor.putBoolean(THEME_CHANGED, true).commit()
         }
     }
 

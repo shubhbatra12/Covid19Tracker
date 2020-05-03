@@ -61,7 +61,6 @@ class MainActivity : AppCompatActivity() {
 
         swipeToRefresh.setOnRefreshListener {
             fetchData()
-            swipeToRefresh.isRefreshing = false
         }
 
     }
@@ -125,6 +124,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun fetchData() {
         GlobalScope.launch(Dispatchers.Main) {
+            swipeToRefresh.isRefreshing = true
             val response = withContext(Dispatchers.IO) { Client.api.getMyUser() }
             if (response.isSuccessful) {
                 response.body()?.let {
@@ -139,6 +139,7 @@ class MainActivity : AppCompatActivity() {
                     adapter.notifyDataSetChanged()
                 }
             }
+            swipeToRefresh.isRefreshing = false
         }
     }
 

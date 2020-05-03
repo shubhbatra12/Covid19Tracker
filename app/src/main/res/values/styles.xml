@@ -13,11 +13,15 @@
         <item name="background1">#323131</item>
         <item name="background2">#424141</item>
         <item name="textColor">#FFFFFF</item>
+        <item name="textColor2">#BEBEBE</item>
+        <item name="android:navigationBarColor">#323131</item>
     </style>
     <style name="LightTheme">
         <item name="background1">#EAEAEA</item>
         <item name="background2">#AAAAAA</item>
         <item name="textColor">#000000</item>
+        <item name="textColor2">#424141</item>
+        <item name="android:navigationBarColor">#EAEAEA</item>
     </style>
 
 </resources>

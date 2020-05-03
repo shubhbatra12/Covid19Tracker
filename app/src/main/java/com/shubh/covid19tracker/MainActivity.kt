@@ -106,6 +106,11 @@ class MainActivity : AppCompatActivity() {
                     list.clear()
                     originalList.addAll(it)
                     list.addAll(it)
+
+                    //Sorting based on number of cases
+                    originalList.sort()
+                    list.sort()
+
                     adapter.notifyDataSetChanged()
                 }
             }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#323131">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Settings"
+        app:titleTextColor="@android:color/white"
+        android:background="#F44336"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center_vertical"
+        android:layout_marginTop="10dp"
+        android:layout_margin="5dp"
+        android:background="#424141"
+        android:id="@+id/themeBtn">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Theme"
+            android:textColor="@android:color/white"
+            android:textSize="20dp"
+            android:layout_margin="10dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

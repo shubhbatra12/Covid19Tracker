@@ -13,5 +13,8 @@ interface CoronaService {
     @GET("countries/{id}")
     suspend fun getUser(@Path("id") id:String): Response<Country>
 
+    @GET("countries/{id}")
+    suspend fun getUserDet(@Path("id") id:String): Country
+
 
 }

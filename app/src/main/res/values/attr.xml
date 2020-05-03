@@ -3,4 +3,5 @@
     <attr name="background1"/>
     <attr name="background2"/>
     <attr name="textColor"/>
+    <attr name="textColor2"/>
 </resources>

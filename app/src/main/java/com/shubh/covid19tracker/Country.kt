@@ -15,4 +15,11 @@ data class Country(
 	val deaths: Int? = null,
 	val todayCases: Int? = null,
 	val todayDeaths: Int? = null
-)
+): Comparable<Country> {
+	override fun compareTo(other: Country): Int {
+		return if (this.cases != null && other.cases != null)
+			-this.cases.compareTo(other.cases)
+		else 0
+	}
+}
+

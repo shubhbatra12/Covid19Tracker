@@ -1,6 +1,7 @@
 package com.shubh.covid19tracker
 
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.net.wifi.WifiManager
@@ -12,6 +13,7 @@ import android.view.View
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.internet_dialog.view.*
@@ -21,14 +23,22 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+const val DARK_THEME = "DarkTheme"
+const val RC_SETTINGS = 111
+const val THEME_CHANGED = 100
 class MainActivity : AppCompatActivity() {
 
     val list = arrayListOf<Country>()
     val originalList = arrayListOf<Country>()
     val adapter = CountryAdapter(list)
 
+    private val sharedPreferences by lazy {
+        PreferenceManager.getDefaultSharedPreferences(this)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        changeTheme(false)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
@@ -49,8 +59,19 @@ class MainActivity : AppCompatActivity() {
             fetchData()
             swipeToRefresh.isRefreshing = false
         }
+
     }
 
+    private fun changeTheme(reCreate: Boolean) {
+        if(sharedPreferences.getBoolean(DARK_THEME, true)){
+            setTheme(R.style.DarkTheme)
+        }else{
+            setTheme(R.style.LightTheme)
+        }
+        if(reCreate){
+            recreate()
+        }
+    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
@@ -89,7 +110,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.settingsMain -> {
-                startActivity(Intent(this,SettingsActivity::class.java))
+                startActivityForResult(Intent(this,SettingsActivity::class.java), RC_SETTINGS)
                 //Toast.makeText(this,"Working On It",Toast.LENGTH_LONG).show()
 
             }
@@ -106,6 +127,11 @@ class MainActivity : AppCompatActivity() {
                     list.clear()
                     originalList.addAll(it)
                     list.addAll(it)
+
+                    //Sorting based on number of cases
+                    originalList.sort()
+                    list.sort()
+
                     adapter.notifyDataSetChanged()
                 }
             }
@@ -163,6 +189,15 @@ class MainActivity : AppCompatActivity() {
         val i = Intent(this,DetailActivity::class.java)
         i.putExtra("name",view.nameView.text.toString())
         startActivity(i)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == RC_SETTINGS){
+            if(resultCode == THEME_CHANGED){
+                changeTheme(true)
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 }
 

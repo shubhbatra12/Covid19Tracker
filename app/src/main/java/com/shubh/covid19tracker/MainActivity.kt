@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        changeTheme(false)
+        changeTheme()
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
@@ -65,14 +65,11 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun changeTheme(reCreate: Boolean) {
+    private fun changeTheme() {
         if (sharedPreferences.getBoolean(DARK_THEME, true)) {
             setTheme(R.style.DarkTheme)
         } else {
             setTheme(R.style.LightTheme)
-        }
-        if (reCreate) {
-            recreate()
         }
     }
 
@@ -198,8 +195,8 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when(requestCode) {
             RC_SETTINGS -> if (sharedPreferences.getBoolean(THEME_CHANGED, false)) {
-                changeTheme(true)
-                sharedPreferencesEditor.putBoolean(THEME_CHANGED, false)
+                recreate()
+                sharedPreferencesEditor.putBoolean(THEME_CHANGED, false).commit()
             }
             RC_NETWORK -> if(cd.isConnectingToInternet){
                 fetchData()

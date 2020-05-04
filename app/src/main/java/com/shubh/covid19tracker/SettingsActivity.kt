@@ -19,7 +19,7 @@ class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        changeTheme(false)
+        changeTheme()
         setContentView(R.layout.activity_settings)
 
         themeBtn.setOnClickListener {
@@ -28,20 +28,17 @@ class SettingsActivity : AppCompatActivity() {
 
         sharedPreferences.registerOnSharedPreferenceChangeListener { sharedPreferences, key ->
             if (key != null && key == DARK_THEME) {
-                changeTheme(true)
+                recreate()
             }
         }
 
     }
 
-    private fun changeTheme(reCreate: Boolean) {
+    private fun changeTheme() {
         if (sharedPreferences.getBoolean(DARK_THEME, true)) {
             setTheme(R.style.DarkTheme)
         } else {
             setTheme(R.style.LightTheme)
-        }
-        if (reCreate) {
-            recreate()
         }
     }
 

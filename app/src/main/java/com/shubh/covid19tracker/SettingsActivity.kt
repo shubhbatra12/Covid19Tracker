@@ -52,7 +52,11 @@ class SettingsActivity : AppCompatActivity() {
             .setCancelable(true)
         val mAlertDialog = mBuilder.show()
 
-
+        if(sharedPreferences.getBoolean(DARK_THEME, true)){
+            mDialogView.radioButtonDark.isChecked = true
+        }else{
+            mDialogView.radioButtonLight.isChecked = true
+        }
 
         mDialogView.radioButtonDark.setOnClickListener {
             mAlertDialog.dismiss()

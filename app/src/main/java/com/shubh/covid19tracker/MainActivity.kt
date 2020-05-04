@@ -25,6 +25,7 @@ import kotlinx.coroutines.withContext
 const val DARK_THEME = "DarkTheme"
 const val RC_SETTINGS = 111
 const val THEME_CHANGED = "ThemeChanged"
+const val RC_NETWORK = 222
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,6 +36,10 @@ class MainActivity : AppCompatActivity() {
     private val sharedPreferences by lazy {
         PreferenceManager.getDefaultSharedPreferences(this)
     }
+    private val sharedPreferencesEditor by lazy {
+        sharedPreferences.edit()
+    }
+    private val cd by lazy { ConnectionDetector(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,14 +47,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        val cd = ConnectionDetector(this)
 
+
+        countryRv.apply {
+            layoutManager = LinearLayoutManager(this@MainActivity)
+            adapter = this@MainActivity.adapter
+        }
         if (cd.isConnectingToInternet) {
-            countryRv.apply {
-                layoutManager = LinearLayoutManager(this@MainActivity)
-                adapter = this@MainActivity.adapter
-            }
-
             fetchData()
         } else {
             openDialog()
@@ -57,18 +61,17 @@ class MainActivity : AppCompatActivity() {
 
         swipeToRefresh.setOnRefreshListener {
             fetchData()
-            swipeToRefresh.isRefreshing = false
         }
 
     }
 
     private fun changeTheme(reCreate: Boolean) {
-        if(sharedPreferences.getBoolean(DARK_THEME, true)){
+        if (sharedPreferences.getBoolean(DARK_THEME, true)) {
             setTheme(R.style.DarkTheme)
-        }else{
+        } else {
             setTheme(R.style.LightTheme)
         }
-        if(reCreate){
+        if (reCreate) {
             recreate()
         }
     }
@@ -77,7 +80,7 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.main_menu, menu)
         val item = menu.findItem(R.id.search)
         val searchView = item.actionView as SearchView
-        item.setOnActionExpandListener(object : MenuItem.OnActionExpandListener{
+        item.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
                 fetchData()
                 return true
@@ -90,13 +93,13 @@ class MainActivity : AppCompatActivity() {
 
         })
 
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                if(!newText.isNullOrEmpty()){
+                if (!newText.isNullOrEmpty()) {
                     searchUsers(newText)
                 }
                 return true
@@ -110,7 +113,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.settingsMain -> {
-                startActivityForResult(Intent(this,SettingsActivity::class.java), RC_SETTINGS)
+                startActivityForResult(Intent(this, SettingsActivity::class.java), RC_SETTINGS)
                 //Toast.makeText(this,"Working On It",Toast.LENGTH_LONG).show()
 
             }
@@ -121,6 +124,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun fetchData() {
         GlobalScope.launch(Dispatchers.Main) {
+            swipeToRefresh.isRefreshing = true
             val response = withContext(Dispatchers.IO) { Client.api.getMyUser() }
             if (response.isSuccessful) {
                 response.body()?.let {
@@ -135,11 +139,12 @@ class MainActivity : AppCompatActivity() {
                     adapter.notifyDataSetChanged()
                 }
             }
+            swipeToRefresh.isRefreshing = false
         }
     }
 
     private fun searchUsers(query: String) {
-        if (query.length>=2) {
+        if (query.length >= 2) {
             GlobalScope.launch(Dispatchers.Main) {
                 val response = withContext(Dispatchers.IO) { Client.api.getUser(query) }
                 if (response.isSuccessful) {
@@ -150,28 +155,27 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-        }
-        else{
+        } else {
             fetchData()
         }
     }
 
     private fun openDialog() {
 
-        val mDialogView = LayoutInflater.from(this).inflate(R.layout.internet_dialog, null,false)
+        val mDialogView = LayoutInflater.from(this).inflate(R.layout.internet_dialog, null, false)
 
 
         val mBuilder = AlertDialog.Builder(this)
             .setView(mDialogView)
             .setCancelable(true)
-        val  mAlertDialog = mBuilder.show()
+        val mAlertDialog = mBuilder.show()
 
 
 
         mDialogView.dialogWifiBtnFilter.setOnClickListener {
             mAlertDialog.dismiss()
-            startActivity(Intent(WifiManager.ACTION_PICK_WIFI_NETWORK))
-            Toast.makeText(this,"Restart app",Toast.LENGTH_LONG).show()
+            startActivityForResult(Intent(WifiManager.ACTION_PICK_WIFI_NETWORK), RC_NETWORK)
+//            Toast.makeText(this, "Restart app", Toast.LENGTH_LONG).show()
         }
         mDialogView.dialogDataBtnFilter.setOnClickListener {
             mAlertDialog.dismiss()
@@ -180,21 +184,25 @@ class MainActivity : AppCompatActivity() {
                 "com.android.settings",
                 "com.android.settings.Settings\$DataUsageSummaryActivity"
             )
-            startActivity(intent)
-            Toast.makeText(this,"Restart app",Toast.LENGTH_LONG).show()
+            startActivityForResult(intent, RC_NETWORK)
+//            Toast.makeText(this, "Restart app", Toast.LENGTH_LONG).show()
         }
     }
 
-    fun openDetail(view : View){
-        val i = Intent(this,DetailActivity::class.java)
-        i.putExtra("name",view.nameView.text.toString())
+    fun openDetail(view: View) {
+        val i = Intent(this, DetailActivity::class.java)
+        i.putExtra("name", view.nameView.text.toString())
         startActivity(i)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == RC_SETTINGS){
-            if(sharedPreferences.getBoolean(THEME_CHANGED, false)){
+        when(requestCode) {
+            RC_SETTINGS -> if (sharedPreferences.getBoolean(THEME_CHANGED, false)) {
                 changeTheme(true)
+                sharedPreferencesEditor.putBoolean(THEME_CHANGED, false)
+            }
+            RC_NETWORK -> if(cd.isConnectingToInternet){
+                fetchData()
             }
         }
         super.onActivityResult(requestCode, resultCode, data)

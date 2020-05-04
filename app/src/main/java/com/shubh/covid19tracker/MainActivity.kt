@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.shubh.covid19tracker.India.IndiaActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.internet_dialog.view.*
 import kotlinx.android.synthetic.main.item_country.view.*
@@ -47,8 +48,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-
-
         countryRv.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = this@MainActivity.adapter
@@ -61,6 +60,13 @@ class MainActivity : AppCompatActivity() {
 
         swipeToRefresh.setOnRefreshListener {
             fetchData()
+        }
+
+        fab.setOnClickListener{
+            startActivity(Intent(
+                this,
+                IndiaActivity::class.java)
+            )
         }
 
     }
@@ -111,8 +117,6 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.settingsMain -> {
                 startActivityForResult(Intent(this, SettingsActivity::class.java), RC_SETTINGS)
-                //Toast.makeText(this,"Working On It",Toast.LENGTH_LONG).show()
-
             }
 
         }
@@ -172,7 +176,6 @@ class MainActivity : AppCompatActivity() {
         mDialogView.dialogWifiBtnFilter.setOnClickListener {
             mAlertDialog.dismiss()
             startActivityForResult(Intent(WifiManager.ACTION_PICK_WIFI_NETWORK), RC_NETWORK)
-//            Toast.makeText(this, "Restart app", Toast.LENGTH_LONG).show()
         }
         mDialogView.dialogDataBtnFilter.setOnClickListener {
             mAlertDialog.dismiss()
@@ -182,7 +185,6 @@ class MainActivity : AppCompatActivity() {
                 "com.android.settings.Settings\$DataUsageSummaryActivity"
             )
             startActivityForResult(intent, RC_NETWORK)
-//            Toast.makeText(this, "Restart app", Toast.LENGTH_LONG).show()
         }
     }
 

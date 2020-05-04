@@ -111,8 +111,6 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.settingsMain -> {
                 startActivityForResult(Intent(this, SettingsActivity::class.java), RC_SETTINGS)
-                //Toast.makeText(this,"Working On It",Toast.LENGTH_LONG).show()
-
             }
 
         }
@@ -172,7 +170,6 @@ class MainActivity : AppCompatActivity() {
         mDialogView.dialogWifiBtnFilter.setOnClickListener {
             mAlertDialog.dismiss()
             startActivityForResult(Intent(WifiManager.ACTION_PICK_WIFI_NETWORK), RC_NETWORK)
-//            Toast.makeText(this, "Restart app", Toast.LENGTH_LONG).show()
         }
         mDialogView.dialogDataBtnFilter.setOnClickListener {
             mAlertDialog.dismiss()
@@ -182,7 +179,6 @@ class MainActivity : AppCompatActivity() {
                 "com.android.settings.Settings\$DataUsageSummaryActivity"
             )
             startActivityForResult(intent, RC_NETWORK)
-//            Toast.makeText(this, "Restart app", Toast.LENGTH_LONG).show()
         }
     }
 

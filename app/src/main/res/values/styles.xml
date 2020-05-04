@@ -18,7 +18,7 @@
     </style>
     <style name="LightTheme">
         <item name="background1">#EAEAEA</item>
-        <item name="background2">#AAAAAA</item>
+        <item name="background2">#DAD8D8</item>
         <item name="textColor">#000000</item>
         <item name="textColor2">#424141</item>
         <item name="android:navigationBarColor">#EAEAEA</item>

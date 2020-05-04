@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.shubh.covid19tracker.India.IndiaActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.internet_dialog.view.*
 import kotlinx.android.synthetic.main.item_country.view.*
@@ -59,6 +60,13 @@ class MainActivity : AppCompatActivity() {
 
         swipeToRefresh.setOnRefreshListener {
             fetchData()
+        }
+
+        fab.setOnClickListener{
+            startActivity(Intent(
+                this,
+                IndiaActivity::class.java)
+            )
         }
 
     }

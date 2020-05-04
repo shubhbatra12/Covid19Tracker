@@ -9,10 +9,13 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="Covid-19 Tracker"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/appicon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SettingsActivity"
+        <activity android:name=".India.IndiaActivity"></activity>
+        <activity
+            android:name=".SettingsActivity"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".DetailActivity"

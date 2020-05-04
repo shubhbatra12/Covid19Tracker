@@ -37,6 +37,7 @@ class IndiaActivity : AppCompatActivity() {
             adapter = this@IndiaActivity.adapterInd
         }
 
+
         fetchDataIndia()
     }
 

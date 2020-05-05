@@ -94,6 +94,11 @@ class IndiaActivity : AppCompatActivity() {
                         listInd.clear()
                         originalListInd.addAll(it.state)
                         listInd.addAll(it.state)
+
+                        //Sorting
+                        originalListInd.sort()
+                        listInd.sort()
+
                         adapterInd.notifyDataSetChanged()
                     }
                 }

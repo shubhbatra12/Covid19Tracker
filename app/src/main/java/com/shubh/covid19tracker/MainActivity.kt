@@ -80,6 +80,7 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.main_menu, menu)
         val item = menu.findItem(R.id.search)
         val searchView = item.actionView as SearchView
+        searchView.isIconifiedByDefault=false
         item.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
                 fetchData()

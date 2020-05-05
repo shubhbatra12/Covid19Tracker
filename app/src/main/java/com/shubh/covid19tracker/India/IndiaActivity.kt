@@ -110,19 +110,16 @@ class IndiaActivity : AppCompatActivity() {
     private fun openDialogInternetInd() {
 
         val mDialogView = LayoutInflater.from(this).inflate(R.layout.internet_dialog, null, false)
-
-
         val mBuilder = AlertDialog.Builder(this)
             .setView(mDialogView)
             .setCancelable(true)
         val mAlertDialog = mBuilder.show()
 
-
-
         mDialogView.dialogWifiBtnFilter.setOnClickListener {
             mAlertDialog.dismiss()
             startActivityForResult(Intent(WifiManager.ACTION_PICK_WIFI_NETWORK), RC_NETWORK)
         }
+
         mDialogView.dialogDataBtnFilter.setOnClickListener {
             mAlertDialog.dismiss()
             val intent = Intent(Intent.ACTION_MAIN)

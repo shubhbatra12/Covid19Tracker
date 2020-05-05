@@ -52,11 +52,8 @@ class MainActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = this@MainActivity.adapter
         }
-        if (cd.isConnectingToInternet) {
             fetchData()
-        } else {
-            openDialog()
-        }
+
 
         swipeToRefresh.setOnRefreshListener {
             fetchData()
@@ -124,22 +121,28 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun fetchData() {
-        GlobalScope.launch(Dispatchers.Main) {
-            swipeToRefresh.isRefreshing = true
-            val response = withContext(Dispatchers.IO) { Client.api.getMyUser() }
-            if (response.isSuccessful) {
-                response.body()?.let {
-                    list.clear()
-                    originalList.addAll(it)
-                    list.addAll(it)
+        if (cd.isConnectingToInternet) {
+            GlobalScope.launch(Dispatchers.Main) {
+                swipeToRefresh.isRefreshing = true
+                val response = withContext(Dispatchers.IO) { Client.api.getMyUser() }
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        list.clear()
+                        originalList.addAll(it)
+                        list.addAll(it)
 
-                    //Sorting based on number of cases
-                    originalList.sort()
-                    list.sort()
+                        //Sorting based on number of cases
+                        originalList.sort()
+                        list.sort()
 
-                    adapter.notifyDataSetChanged()
+                        adapter.notifyDataSetChanged()
+                    }
                 }
+                swipeToRefresh.isRefreshing = false
             }
+        }
+        else {
+            openDialogInternet()
             swipeToRefresh.isRefreshing = false
         }
     }
@@ -161,7 +164,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun openDialog() {
+     private fun openDialogInternet() {
 
         val mDialogView = LayoutInflater.from(this).inflate(R.layout.internet_dialog, null, false)
 

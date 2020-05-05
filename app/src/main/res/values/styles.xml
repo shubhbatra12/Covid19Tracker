@@ -11,7 +11,7 @@
 
     <style name="DarkTheme">
         <item name="background1">#323131</item>
-        <item name="background2">#424141</item>
+        <item name="background2">#3C3A3A</item>
         <item name="textColor">#FFFFFF</item>
         <item name="textColor2">#BEBEBE</item>
         <item name="android:navigationBarColor">#323131</item>

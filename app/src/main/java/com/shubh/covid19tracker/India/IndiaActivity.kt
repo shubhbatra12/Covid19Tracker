@@ -1,13 +1,17 @@
 package com.shubh.covid19tracker.India
 
+import android.app.AlertDialog
 import android.content.Intent
+import android.net.wifi.WifiManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shubh.covid19tracker.*
 import kotlinx.android.synthetic.main.activity_india.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.internet_dialog.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -32,13 +36,26 @@ class IndiaActivity : AppCompatActivity() {
         changeThemeInd()
         setContentView(R.layout.activity_india)
 
+        swipeToRefreshInd.isRefreshing = true
+
         stateRv.apply {
             layoutManager = LinearLayoutManager(this@IndiaActivity)
             adapter = this@IndiaActivity.adapterInd
         }
 
-
         fetchDataIndia()
+
+        swipeToRefreshInd.setOnRefreshListener {
+            fetchDataIndia()
+        }
+
+        fabIND.setOnClickListener{
+            startActivity(Intent(
+                this,
+                MainActivity::class.java)
+            )
+        }
+
     }
 
     private fun changeThemeInd() {
@@ -63,16 +80,50 @@ class IndiaActivity : AppCompatActivity() {
     }
 
     private fun fetchDataIndia() {
-        GlobalScope.launch(Dispatchers.Main) {
-            val response = withContext(Dispatchers.IO) { ClientStates.api.getMyState() }
-            if (response.isSuccessful) {
-                response.body()?.let {
-                    listInd.clear()
-                    originalListInd.addAll(it.state)
-                    listInd.addAll(it.state)
-                    adapterInd.notifyDataSetChanged()
+        if (cdIn.isConnectingToInternet) {
+            swipeToRefreshInd.isRefreshing = true
+            GlobalScope.launch(Dispatchers.Main) {
+                val response = withContext(Dispatchers.IO) { ClientStates.api.getMyState() }
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        listInd.clear()
+                        originalListInd.addAll(it.state)
+                        listInd.addAll(it.state)
+                        adapterInd.notifyDataSetChanged()
+                    }
                 }
             }
+            swipeToRefreshInd.isRefreshing = false
+        } else {
+            openDialogInternetInd()
+            swipeToRefreshInd.isRefreshing = false
+        }
+    }
+
+    private fun openDialogInternetInd() {
+
+        val mDialogView = LayoutInflater.from(this).inflate(R.layout.internet_dialog, null, false)
+
+
+        val mBuilder = AlertDialog.Builder(this)
+            .setView(mDialogView)
+            .setCancelable(true)
+        val mAlertDialog = mBuilder.show()
+
+
+
+        mDialogView.dialogWifiBtnFilter.setOnClickListener {
+            mAlertDialog.dismiss()
+            startActivityForResult(Intent(WifiManager.ACTION_PICK_WIFI_NETWORK), RC_NETWORK)
+        }
+        mDialogView.dialogDataBtnFilter.setOnClickListener {
+            mAlertDialog.dismiss()
+            val intent = Intent(Intent.ACTION_MAIN)
+            intent.setClassName(
+                "com.android.settings",
+                "com.android.settings.Settings\$DataUsageSummaryActivity"
+            )
+            startActivityForResult(intent, RC_NETWORK)
         }
     }
 }

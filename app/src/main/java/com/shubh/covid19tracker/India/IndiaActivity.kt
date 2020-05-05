@@ -36,8 +36,6 @@ class IndiaActivity : AppCompatActivity() {
         changeThemeInd()
         setContentView(R.layout.activity_india)
 
-        swipeToRefreshInd.isRefreshing = true
-
         stateRv.apply {
             layoutManager = LinearLayoutManager(this@IndiaActivity)
             adapter = this@IndiaActivity.adapterInd
@@ -99,8 +97,9 @@ class IndiaActivity : AppCompatActivity() {
                         adapterInd.notifyDataSetChanged()
                     }
                 }
+                swipeToRefreshInd.isRefreshing = false
             }
-            swipeToRefreshInd.isRefreshing = false
+
         } else {
             openDialogInternetInd()
             swipeToRefreshInd.isRefreshing = false

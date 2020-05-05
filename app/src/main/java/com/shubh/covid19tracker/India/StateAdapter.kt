@@ -24,9 +24,9 @@ class StateAdapter(val data: List<State>) : RecyclerView.Adapter<StateAdapter.Us
     class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(item: State) = with(itemView) {
             nameView.text = item.name
-            totalCases.text = "Total : "+item.total.toString()
-            deadCases.text = "Deaths : "+item.death.toString()
-            recoveredCases.text = "Recovered : "+item.cured.toString()
+            totalCases.text = item.total.toString()
+            deadCases.text = item.death.toString()
+            recoveredCases.text =item.cured.toString()
         }
     }
 

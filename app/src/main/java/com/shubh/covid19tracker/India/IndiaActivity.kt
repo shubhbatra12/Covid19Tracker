@@ -50,11 +50,18 @@ class IndiaActivity : AppCompatActivity() {
         }
 
         fabIND.setOnClickListener{
-            startActivity(Intent(
-                this,
-                MainActivity::class.java)
-            )
+            finish()
         }
+
+//        GlobalScope.launch(Dispatchers.Main) {
+//            swipeToRefreshInd.isRefreshing = true
+//            val response = withContext(Dispatchers.IO) { ClientStates.api.getSummary() }
+//            if (response.isSuccessful) {
+//                response.body()?.let {
+//                    txtV1.text = it.totalCases.toString()
+//                }
+//            }
+//        }
 
     }
 
@@ -81,8 +88,8 @@ class IndiaActivity : AppCompatActivity() {
 
     private fun fetchDataIndia() {
         if (cdIn.isConnectingToInternet) {
-            swipeToRefreshInd.isRefreshing = true
             GlobalScope.launch(Dispatchers.Main) {
+                swipeToRefreshInd.isRefreshing = true
                 val response = withContext(Dispatchers.IO) { ClientStates.api.getMyState() }
                 if (response.isSuccessful) {
                     response.body()?.let {
@@ -103,19 +110,16 @@ class IndiaActivity : AppCompatActivity() {
     private fun openDialogInternetInd() {
 
         val mDialogView = LayoutInflater.from(this).inflate(R.layout.internet_dialog, null, false)
-
-
         val mBuilder = AlertDialog.Builder(this)
             .setView(mDialogView)
             .setCancelable(true)
         val mAlertDialog = mBuilder.show()
 
-
-
         mDialogView.dialogWifiBtnFilter.setOnClickListener {
             mAlertDialog.dismiss()
             startActivityForResult(Intent(WifiManager.ACTION_PICK_WIFI_NETWORK), RC_NETWORK)
         }
+
         mDialogView.dialogDataBtnFilter.setOnClickListener {
             mAlertDialog.dismiss()
             val intent = Intent(Intent.ACTION_MAIN)

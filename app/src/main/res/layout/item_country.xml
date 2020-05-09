@@ -27,7 +27,7 @@
                 android:id="@+id/nameView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="13dp"
                 android:textSize="25sp"
                 tools:text="Country Name"
                 android:textColor="?attr/textColor"/>
@@ -57,16 +57,17 @@
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/confirmedRl">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Confimed"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="16dp"
-                    android:id="@+id/totalCasesText"
-                    android:textColor="#2196F3"/>
+                    android:textColor="?attr/textColor2"
+                    android:id="@+id/totalCasesText"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -75,24 +76,25 @@
                     android:id="@+id/totalCases"
                     android:layout_below="@+id/totalCasesText"
                     android:layout_marginTop="10dp"
-                    android:layout_marginStart="16dp"
                     android:textColor="#2196F3"/>
 
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="60dp"
+                android:id="@+id/deathRl"
+                android:layout_alignStart="@+id/confirmedRl">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Deaths"
                     android:id="@+id/deadCasesText"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="60dp"
-                    android:layout_alignParentEnd="true"
-                    android:textColor="@android:color/holo_red_light"/>
+                    android:textColor="?attr/textColor2"
+                    android:layout_alignParentEnd="true"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -101,7 +103,6 @@
                     android:id="@+id/deadCases"
                     android:layout_below="@+id/deadCasesText"
                     android:layout_marginTop="10dp"
-                    android:layout_marginEnd="60dp"
                     android:layout_alignParentEnd="true"
                     android:gravity="center"
                     android:textColor="@android:color/holo_red_light"/>
@@ -111,7 +112,11 @@
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="16dp"
+                android:id="@+id/curedRl"
+                android:layout_alignStart="@+id/deathRl">
 
 
                 <TextView
@@ -119,10 +124,8 @@
                     android:layout_height="wrap_content"
                     android:text="Cured"
                     android:id="@+id/recoveredText"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="16dp"
-                    android:textColor="#8BC34A"/>
+                    android:textColor="?attr/textColor2"
+                    android:layout_alignParentEnd="true" />
 
 
                 <TextView
@@ -132,9 +135,8 @@
                     android:layout_below="@+id/recoveredText"
                     android:layout_alignParentEnd="true"
                     android:id="@+id/recoveredCases"
+                    android:gravity="center_horizontal"
                     android:layout_marginTop="10dp"
-                    android:layout_marginStart="16dp"
-                    android:gravity="center"
                     android:textColor="#8BC34A"/>
 
             </RelativeLayout>

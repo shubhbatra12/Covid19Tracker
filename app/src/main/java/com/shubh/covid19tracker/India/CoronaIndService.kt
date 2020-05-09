@@ -7,8 +7,4 @@ interface CoronaIndService {
 
     @GET("states")
     suspend fun getMyState(): Response<SearchResponse>
-
-    @GET("summary")
-    suspend fun getSummary(): Response<ResponseSummary>
-
 }

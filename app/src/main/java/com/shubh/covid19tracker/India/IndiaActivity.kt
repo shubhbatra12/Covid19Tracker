@@ -6,6 +6,7 @@ import android.net.wifi.WifiManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.WindowManager
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shubh.covid19tracker.*
@@ -34,6 +35,7 @@ class IndiaActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         changeThemeInd()
+        window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE)
         setContentView(R.layout.activity_india)
 
         stateRv.apply {
@@ -50,16 +52,6 @@ class IndiaActivity : AppCompatActivity() {
         fabIND.setOnClickListener{
             finish()
         }
-
-//        GlobalScope.launch(Dispatchers.Main) {
-//            swipeToRefreshInd.isRefreshing = true
-//            val response = withContext(Dispatchers.IO) { ClientStates.api.getSummary() }
-//            if (response.isSuccessful) {
-//                response.body()?.let {
-//                    txtV1.text = it.totalCases.toString()
-//                }
-//            }
-//        }
 
     }
 

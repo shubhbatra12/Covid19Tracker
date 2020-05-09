@@ -5,10 +5,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.net.wifi.WifiManager
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -45,6 +42,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         changeTheme()
+        window.setFlags(WindowManager.LayoutParams.FLAG_SECURE,WindowManager.LayoutParams.FLAG_SECURE)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
@@ -193,9 +191,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun openDetail(view: View) {
-        val i = Intent(this, DetailActivity::class.java)
-        i.putExtra("name", view.nameView.text.toString())
-        startActivity(i)
+        if(view.nameView.text == "India"){
+            startActivity(Intent(this,IndiaActivity::class.java))
+        }
+        else{
+            val i = Intent(this, DetailActivity::class.java)
+            i.putExtra("name", view.nameView.text.toString())
+            startActivity(i)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

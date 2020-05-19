@@ -38,12 +38,22 @@
                 android:layout_marginEnd="75dp"
                 android:layout_alignParentEnd="true"/>
 
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/icons8beingsick52"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="135dp"
+                android:layout_alignParentEnd="true"/>
+
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
+
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -67,6 +77,34 @@
                     android:layout_below="@+id/totalCasesText"
                     android:layout_marginTop="10dp"
                     android:textColor="#2196F3"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="120dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/activeRl"
+                android:layout_alignStart="@+id/confirmedRl">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Active"
+                    android:textColor="?attr/textColor2"
+                    android:id="@+id/activeCasesText"
+                    android:layout_alignParentEnd="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Active"
+                    android:id="@+id/activeCases"
+                    android:layout_below="@+id/activeCasesText"
+                    android:layout_marginTop="10dp"
+                    android:layout_alignParentEnd="true"
+                    android:textColor="#FFEB3B"/>
 
             </RelativeLayout>
 

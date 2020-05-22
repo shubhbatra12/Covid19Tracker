@@ -24,11 +24,30 @@ class StateAdapter(val data: List<State>) : RecyclerView.Adapter<StateAdapter.Us
     class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(item: State) = with(itemView) {
             nameView.text = item.name
-            totalCases.text = item.total.toString()
-            activeCases.text = item.confirmed.toString()
-            deadCases.text = item.death.toString()
-            recoveredCases.text =item.cured.toString()
+            totalCases.text = convertToIndianStandard(item.total.toString())
+            activeCases.text = convertToIndianStandard(item.confirmed.toString())
+            deadCases.text = convertToIndianStandard(item.death.toString())
+            recoveredCases.text = convertToIndianStandard(item.cured.toString())
         }
+        private fun convertToIndianStandard(str: String) : String{
+            val len = str.length
+            return when {
+                len>5 -> {
+                    var ans = str.substring(len-3)
+                    for (i in len-3 downTo 1 step 2){
+                        ans = str.substring((i-2).coerceAtLeast(0),i)+","+ans
+                    }
+                    ans
+                }
+                len>3 -> {
+                    str.substring(0, len-3)+","+str.substring(len-3)
+                }
+                else -> {
+                    str
+                }
+            }
+        }
+
     }
 
 }

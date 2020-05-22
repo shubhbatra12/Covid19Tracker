@@ -12,7 +12,6 @@ import androidx.preference.PreferenceManager
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.internet_dialog.view.*
-import kotlinx.android.synthetic.main.item_country.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -40,7 +39,7 @@ class DetailActivity : AppCompatActivity() {
             detailActRefresh.isRefreshing=false
         }
 
-        val query = intent.getStringExtra("name")
+        val query : String = intent.getStringExtra("name")
         setData(query)
     }
 
@@ -64,15 +63,14 @@ class DetailActivity : AppCompatActivity() {
                 Picasso.get().load(thisCountry.countryInfo?.flag).into(imgFlag)
                 toolbarDet.setTitle(thisCountry.country)
                 contName.text = thisCountry.country
-                totCases.text = "Total Cases : " + thisCountry.cases.toString()
-                actCases.text =
-                    "Active Cases : " + thisCountry.active.toString() + " ↑" + thisCountry.todayCases.toString()
-                recoveredCases.text = "Recovered Cases : " + thisCountry.recovered.toString()
+                totCases.text = "Total Cases : " + convertToIndianStandard(thisCountry.cases.toString())
+                actCases.text = "Active Cases : " + convertToIndianStandard(thisCountry.active.toString()) + " ↑" + convertToIndianStandard(thisCountry.todayCases.toString())
+                recoveredCases.text = "Recovered Cases : " + convertToIndianStandard(thisCountry.recovered.toString())
                 deadCases.text =
-                    "Deceased : " + thisCountry.deaths.toString() + " ↑" + thisCountry.todayDeaths.toString()
+                    "Deceased : " + convertToIndianStandard(thisCountry.deaths.toString()) + " ↑" + thisCountry.todayDeaths.toString()
                 criticalCases.text = "Critical Cases : " + thisCountry.critical
-                Tests.text = "Total Test : " + thisCountry.tests
-                TestsPM.text = "Tests Per Million : " + thisCountry.testsPerOneMillion
+                Tests.text = "Total Test : " + convertToIndianStandard(thisCountry.tests.toString())
+                TestsPM.text = "Tests Per Million : " + convertToIndianStandard(thisCountry.testsPerOneMillion.toString())
 
                 val myFormat = "h:mm a, d MMM YYYY"
                 val sdf = SimpleDateFormat(myFormat)
@@ -85,6 +83,26 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
+    private fun convertToIndianStandard(str: String) : String{
+        val len = str.length
+        return when {
+            len>5 -> {
+                var ans = str.substring(len-3)
+                for (i in len-3 downTo 1 step 2){
+                    ans = str.substring((i-2).coerceAtLeast(0),i)+","+ans
+                }
+                ans
+            }
+            len>3 -> {
+                str.substring(0, len-3)+","+str.substring(len-3)
+            }
+            else -> {
+                str
+            }
+        }
+    }
+
+    @SuppressLint("InflateParams")
     private fun openDialogInternet() {
 
         val mDialogView = LayoutInflater.from(this).inflate(R.layout.internet_dialog, null, false)

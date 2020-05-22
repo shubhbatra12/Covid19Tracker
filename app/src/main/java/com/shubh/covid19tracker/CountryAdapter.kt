@@ -25,6 +25,7 @@ class CountryAdapter(val data: List<Country>) : RecyclerView.Adapter<CountryAdap
         fun bind(item: Country) = with(itemView) {
             nameView.text = item.country
             totalCases.text = item.cases.toString()
+            activeCases.text = item.active.toString()
             deadCases.text = item.deaths.toString()
             recoveredCases.text = item.recovered.toString()
             Picasso.get().load(item.countryInfo?.flag).into(imageView)

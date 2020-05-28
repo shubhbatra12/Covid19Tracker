@@ -119,6 +119,10 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+    }
+
     private fun fetchData() {
         if (cd.isConnectingToInternet) {
             GlobalScope.launch(Dispatchers.Main) {

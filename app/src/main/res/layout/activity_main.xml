@@ -46,5 +46,15 @@
         android:backgroundTint="#F44336"
         android:src="@drawable/india" />
 
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-5689524874061492/6373435808"/>
+
 
 </RelativeLayout>

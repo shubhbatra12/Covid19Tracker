@@ -9,8 +9,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.WindowManager
 import androidx.preference.PreferenceManager
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail.*
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.internet_dialog.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -28,6 +31,10 @@ class DetailActivity : AppCompatActivity() {
         ConnectionDetector(this)
     }
 
+    private val mAppUnitId: String by lazy {
+        "ca-app-pub-5689524874061492~2817334170"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         changeTheme(false)
@@ -41,6 +48,22 @@ class DetailActivity : AppCompatActivity() {
 
         val query : String = intent.getStringExtra("name")
         setData(query)
+        initializeBannerAd(mAppUnitId)
+        loadBannerAd()
+
+    }
+
+    private fun initializeBannerAd(appUnitId: String) {
+
+        MobileAds.initialize(this, appUnitId)
+
+    }
+
+    private fun loadBannerAd() {
+
+        val adRequest = AdRequest.Builder()
+            .build()
+        adViewDet.loadAd(adRequest)
     }
 
     private fun changeTheme(reCreate: Boolean) {
@@ -69,7 +92,7 @@ class DetailActivity : AppCompatActivity() {
                 deadCases.text =
                     "Deceased : " + convertToIndianStandard(thisCountry.deaths.toString()) + " ↑" + thisCountry.todayDeaths.toString()
                 criticalCases.text = "Critical Cases : " + thisCountry.critical
-                Tests.text = "Total Test : " + convertToIndianStandard(thisCountry.tests.toString())
+                Tests.text = "Total Test : " + convertToIndianStandard(thisCountry.tests?.toInt().toString())
                 TestsPM.text = "Tests Per Million : " + convertToIndianStandard(thisCountry.testsPerOneMillion.toString())
 
                 val myFormat = "h:mm a, d MMM YYYY"

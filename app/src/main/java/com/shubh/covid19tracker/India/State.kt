@@ -6,11 +6,11 @@ data class State(
     val cured: Int? = null,
     val name: String? = null,
     val id: String? = null,
-    val confirmed: Int? = null
+    val active: Int? = null
 ) : Comparable<State> {
     override fun compareTo(other: State): Int {
-        return if (this.confirmed != null && other.confirmed != null)
-            -this.confirmed.compareTo(other.confirmed)
+        return if (this.active != null && other.active != null)
+            -this.active.compareTo(other.active)
         else 0
     }
 }

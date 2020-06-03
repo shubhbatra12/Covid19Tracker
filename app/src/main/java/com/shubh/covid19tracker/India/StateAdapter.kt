@@ -25,7 +25,7 @@ class StateAdapter(val data: List<State>) : RecyclerView.Adapter<StateAdapter.Us
         fun bind(item: State) = with(itemView) {
             nameView.text = item.name
             totalCases.text = convertToIndianStandard(item.total.toString())
-            activeCases.text = convertToIndianStandard(item.confirmed.toString())
+            activeCases.text = convertToIndianStandard(item.active.toString())
             deadCases.text = convertToIndianStandard(item.death.toString())
             recoveredCases.text = convertToIndianStandard(item.cured.toString())
         }

@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.WindowManager
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.shubh.covid19tracker.*
 import kotlinx.android.synthetic.main.activity_india.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -32,6 +34,10 @@ class IndiaActivity : AppCompatActivity() {
     }
     private val cdIn by lazy { ConnectionDetector(this) }
 
+    private val mAppUnitId: String by lazy {
+        "ca-app-pub-5689524874061492~2817334170"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         changeThemeInd()
@@ -52,7 +58,22 @@ class IndiaActivity : AppCompatActivity() {
         fabIND.setOnClickListener{
             finish()
         }
+        initializeBannerAd(mAppUnitId)
+        loadBannerAd()
 
+    }
+
+    private fun initializeBannerAd(appUnitId: String) {
+
+        MobileAds.initialize(this, appUnitId)
+
+    }
+
+    private fun loadBannerAd() {
+
+        val adRequest = AdRequest.Builder()
+            .build()
+        adViewInd.loadAd(adRequest)
     }
 
     private fun changeThemeInd() {

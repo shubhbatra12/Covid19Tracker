@@ -53,6 +53,13 @@ class DetailActivity : AppCompatActivity() {
 
     }
 
+    override fun onBackPressed() {
+        finish()
+        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right)
+
+        super.onBackPressed()
+    }
+
     private fun initializeBannerAd(appUnitId: String) {
 
         MobileAds.initialize(this, appUnitId)

@@ -80,6 +80,7 @@ class MainActivity : AppCompatActivity() {
                 this,
                 IndiaActivity::class.java)
             )
+            overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left)
         }
 
         initializeBannerAd(mAppUnitId)
@@ -284,11 +285,13 @@ class MainActivity : AppCompatActivity() {
     fun openDetail(view: View) {
         if(view.nameView.text == "India"){
             startActivity(Intent(this,IndiaActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left)
         }
         else{
             val i = Intent(this,DetailActivity::class.java)
             i.putExtra("name",view.nameView.text)
             startActivity(i)
+            overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left)
             //openDialogDetail(view.nameView.text)
         }
     }

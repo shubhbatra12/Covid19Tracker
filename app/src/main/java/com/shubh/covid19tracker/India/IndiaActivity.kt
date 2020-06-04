@@ -38,6 +38,13 @@ class IndiaActivity : AppCompatActivity() {
         "ca-app-pub-5689524874061492~2817334170"
     }
 
+    override fun onBackPressed() {
+        finish()
+        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right)
+
+        super.onBackPressed()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         changeThemeInd()
@@ -57,6 +64,7 @@ class IndiaActivity : AppCompatActivity() {
 
         fabIND.setOnClickListener{
             finish()
+            overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right   )
         }
         initializeBannerAd(mAppUnitId)
         loadBannerAd()

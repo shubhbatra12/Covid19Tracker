@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
+import kotlinx.coroutines.*
 
 
 class SplashActivity : AppCompatActivity() {
@@ -16,24 +17,19 @@ class SplashActivity : AppCompatActivity() {
         sharedPreferences.edit()
     }
 
-    private val SPLASH_SCREEN_TIME_OUT = 1000
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         changeThemeInd()
         setContentView(R.layout.activity_splash)
 
-        Handler().postDelayed(Runnable {
-            val i = Intent(
-                this@SplashActivity,
-                MainActivity::class.java
-            )
-            //Intent is used to switch from one activity to another.
-            startActivity(i)
-            //invoke the SecondActivity.
-            finish()
-            //the current activity will get finished.
-        }, SPLASH_SCREEN_TIME_OUT.toLong())
+        GlobalScope.launch {
+            delay(1000)
+            withContext(Dispatchers.Main) {
+                startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+                overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top)
+                finish()
+            }
+        }
 
     }
 
